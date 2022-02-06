@@ -1,0 +1,30 @@
+﻿
+import [{package}].models.~;
+import [{package}].repositories.~Repository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ~Service {
+    @Autowired
+    private ~Repository repo;
+
+    public List<~> getAll~s() {
+        return repo.findAll();
+    }
+
+    public ~ get~(Integer id) {
+        return repo.findById(id).get();
+    }
+
+    public ~ create~(~ payload) {
+        return repo.save(payload);
+    }
+
+    public boolean delete~(Integer id) {
+        repo.deleteById(id);
+        return true;
+    }
+}

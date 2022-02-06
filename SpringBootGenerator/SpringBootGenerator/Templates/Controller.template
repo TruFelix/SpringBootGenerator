@@ -1,0 +1,31 @@
+﻿
+import [{package}].models.~;
+import [{package}].services.~Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/~s")
+public class ~Controller {
+    @Autowired
+    private ~Service service;
+
+    @GetMapping
+    public List<~> getAll() { return service.getAll~s(); }
+
+    @GetMapping("/{id}")
+    public ~ get(@PathVariable Integer id) {
+        return service.get~(id);
+    }
+
+    @PostMapping("")
+    public ~ create(@RequestBody ~ payload) { return service.create~(payload); }
+
+    @PutMapping("")
+    public ~ update(@RequestBody ~ payload) { return service.create~(payload); }
+
+    @DeleteMapping("/{id}")
+    public boolean delete(@PathVariable Integer id) { return service.delete~(id); }
+}
