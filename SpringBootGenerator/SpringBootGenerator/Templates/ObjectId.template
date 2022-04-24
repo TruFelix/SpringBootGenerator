@@ -1,0 +1,30 @@
+﻿package [{package}].models;
+
+import [{package}].services.GetSingleService;
+import com.sun.istack.NotNull;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
+/** A class only containing a nonNullable id, useful for referencing Objects in the DB */
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+@MappedSuperclass
+@ToString
+public class ObjectId<T> {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    public T resolve(GetSingleService<T> es) {
+        final var resolved = es.getById(this.id);
+        return resolved;
+    }
+}

@@ -1,0 +1,7 @@
+﻿FROM openjdk:17-jdk-oracle
+
+ADD target/*-SNAPSHOT.jar app.jar
+
+EXPOSE [{port}]
+
+ENTRYPOINT ["sh", "-c", "java -Djava.security.egd=file:/dev/./urandom -jar /app.jar"]

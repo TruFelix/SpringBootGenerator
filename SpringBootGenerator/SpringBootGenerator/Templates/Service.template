@@ -1,30 +1,47 @@
-﻿
-import [{package}].models.~;
-import [{package}].repositories.~Repository;
+﻿package [{package}].services;
+
+import [{package}].models.[{entity}].Create[{entity}];
+import [{package}].models.[{entity}].[{entity}];
+import [{package}].repositories.[{entity}]Repository;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
-public class ~Service {
+public class [{entity}]Service implements EntityService<[{entity}], Create[{entity}]> {
     @Autowired
-    private ~Repository repo;
+    @Getter
+    @Setter
+    private [{entity}]Repository repo;
 
-    public List<~> getAll~s() {
+    public List<[{entity}]> getAll() {
         return repo.findAll();
     }
 
-    public ~ get~(Integer id) {
+    public [{entity}] getById(Integer id) {
         return repo.findById(id).get();
     }
 
-    public ~ create~(~ payload) {
-        return repo.save(payload);
+    public [{entity}] create(Create[{entity}] dto) {
+        final var converted = [{entity}].createFrom(dto);
+        return repo.save(converted);
     }
 
-    public boolean delete~(Integer id) {
+    public [{entity}] update(Integer id, Create[{entity}] update) {
+        final var existing = getById(id);
+
+        existing.setName(update.getName());
+        // TODO: update existing
+
+        final var updated = repo.save(existing);
+        return updated;
+    }
+
+    public void delete(Integer id) {
         repo.deleteById(id);
-        return true;
     }
 }

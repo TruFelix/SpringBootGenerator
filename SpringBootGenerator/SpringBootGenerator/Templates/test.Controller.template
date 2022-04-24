@@ -1,0 +1,112 @@
+﻿package [{package}].controllers;
+
+import [{package}].models.[{entity}].[{entity}];
+import [{package}].models.[{entity}].Create[{entity}];
+import [{package}].services.[{entity}]Service;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.stream.Collectors;
+
+import static [{package}].controllers.Util.asJsonString;
+import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@AutoConfigureMockMvc
+@SpringBootTest()
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+public class [{entity}]ControllerTest {
+    private final String prefix = "/api/[{lowerEntity}]s";
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Autowired
+    private [{entity}]Service [{lowerEntity}]Service;
+
+    @BeforeEach
+    public void setup() {
+        [{lowerEntity}]Service.create(Create[{entity}].builder().name("ASDF").build());
+    }
+
+    @Test
+    public void getAll[{entity}]s() throws Exception {
+        mockMvc.perform(get(this.prefix).accept(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk())
+
+            .andExpect(jsonPath("$").exists())
+            .andExpect(jsonPath("$[*].id").isNotEmpty())
+            // TODO: checks
+        ;
+    }
+
+    @Test
+    public void get[{entity}]ById() throws Exception {
+        mockMvc.perform(get(this.prefix+"/1").accept(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isOk())
+
+            .andExpect(jsonPath("$").exists())
+            .andExpect(jsonPath("$.id").isNotEmpty())
+            // TODO: checks
+        ;
+    }
+
+    @Test
+    public void create[{entity}]() throws Exception {
+        mockMvc.perform(post(this.prefix)
+            .content(asJsonString(Create[{entity}].builder()
+                // TODO: use builder
+                .build())
+            )
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().is2xxSuccessful())
+
+            .andExpect(jsonPath("$.id").isNotEmpty())
+            // TODO: checks
+        ;
+    }
+
+    @Test
+    public void update[{entity}]() throws Exception {
+        final var built = Create[{entity}].builder()
+            // TODO: use builder
+            .build();
+
+        mockMvc.perform(put(this.prefix+"/1")
+            .content(asJsonString(built)
+            )
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").isNotEmpty())
+            .andExpect(jsonPath("$.id").value("1"))
+            // TODO: checks
+        ;
+    }
+
+    @Test
+    public void delete[{entity}]() throws Exception {
+        mockMvc.perform(delete(this.prefix+"/1"))
+            .andExpect(status().isOk())
+        ;
+    }
+    
+
+    // ADVANCED TESTS
+}

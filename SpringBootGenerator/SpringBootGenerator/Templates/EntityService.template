@@ -1,0 +1,10 @@
+﻿package [{package}].services;
+
+import java.util.Collection;
+
+/** A service for all Entities */
+public interface EntityService<T,CreateT> extends GetSingleService<T> {
+    Collection<T> getAll();
+    T create(CreateT create);
+    void delete(Integer id);
+}

@@ -1,31 +1,51 @@
-﻿
-import [{package}].models.~;
-import [{package}].services.~Service;
+﻿package [{package}].controllers;
+
+import [{package}].models.[{entity}].[{entity}];
+import [{package}].models.[{entity}].Create[{entity}];
+import [{package}].services.[{entity}]Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/~s")
-public class ~Controller {
+@RequestMapping("/api/[{lowerEntity}]s")
+public class [{entity}]Controller {
     @Autowired
-    private ~Service service;
+    private [{entity}]Service service;
 
     @GetMapping
-    public List<~> getAll() { return service.getAll~s(); }
+    public List<[{entity}]> getAll() {
+        final var all = service.getAll();
+        System.out.println("[{entity}]>GETALL: " + all.stream().map([{entity}]::toString).collect(Collectors.joining()));
+        return all; 
+    }
 
     @GetMapping("/{id}")
-    public ~ get(@PathVariable Integer id) {
-        return service.get~(id);
+    public [{entity}] get(@PathVariable Integer id) {
+        final var single = service.getById(id);
+        System.out.println("[{entity}]>GETSINGLE: " + single.toString());
+        return single; 
     }
 
     @PostMapping("")
-    public ~ create(@RequestBody ~ payload) { return service.create~(payload); }
+    public [{entity}] create(@RequestBody Create[{entity}] payload) {
+        final var created = service.create(payload);
+        System.out.println("[{entity}]>CREATE: " + created.toString());
+        return created;
+    }
 
-    @PutMapping("")
-    public ~ update(@RequestBody ~ payload) { return service.create~(payload); }
+    @PutMapping("/{id}")
+    public [{entity}] update(@PathVariable Integer id, @RequestBody Create[{entity}] payload) {
+        final var updated = service.create(id, payload);
+        System.out.println("[{entity}]>UPDATE: " + updated.toString());
+        return updated;
+    }
 
     @DeleteMapping("/{id}")
-    public boolean delete(@PathVariable Integer id) { return service.delete~(id); }
+    public void delete(@PathVariable Integer id) {
+        System.out.println("[{entity}]>DELETE: " + id);
+        service.delete(id);
+    }
 }

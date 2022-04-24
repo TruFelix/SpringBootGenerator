@@ -1,0 +1,5 @@
+﻿package [{package}].services;
+
+public interface GetSingleService<T> {
+    T getById(Integer id);
+}

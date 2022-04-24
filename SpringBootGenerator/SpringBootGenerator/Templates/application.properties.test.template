@@ -1,0 +1,8 @@
+﻿spring.datasource.url=jdbc:h2:mem:db
+spring.datasource.username=[{dbUser}]
+spring.datasource.password=[{dbPassword}]
+
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
+spring.jpa.hibernate.ddl-auto=create
+server.error.include-message=always
+server.port=[{port}]

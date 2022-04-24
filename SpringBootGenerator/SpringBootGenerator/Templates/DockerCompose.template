@@ -1,0 +1,26 @@
+﻿version: '2'
+services:
+  [{appName}]:
+    image: [{appImageName}]
+    container_name: [{appName}]
+    command: java -jar /app.jar
+    ports:
+      - "[{port}]:[{port}]"
+    depends_on:
+      - [{dbName}]
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://[{dbName}]:3306/db
+  [{dbName}]:
+    image: mysql
+    container_name: [{dbName}]
+    environment:
+      MYSQL_DATABASE: db
+      MYSQL_USER: [{dbUser}]
+      MYSQL_PASSWORD: [{dbPassword}]
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
+    volumes:
+    - ./.mysql:/var/lib/mysql

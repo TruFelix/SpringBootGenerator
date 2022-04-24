@@ -1,0 +1,44 @@
+﻿package [{package}].models.[{entity}];
+
+import [{package}].models.ObjectId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+import javax.persistence.*;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@SuperBuilder
+@ToString
+@Inheritance
+public class [{entity}] extends ObjectId<[{entity}]> {
+    // TODO: Entity [{entity}]
+    private String name;
+
+    public static [{entity}] createFrom(Create[{entity}] create[{entity}]) {
+        return [{entity}].builder()
+            .name(create[{entity}].getName())
+            // TODO: createFrom [{entity}]
+            .build();
+    }
+
+    //    GENERATED
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ObjectId other = (ObjectId) o;
+
+        return getId() == other.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return getId();
+    }
+}

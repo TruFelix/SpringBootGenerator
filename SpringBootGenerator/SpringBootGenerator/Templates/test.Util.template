@@ -1,0 +1,16 @@
+﻿package [{package}].controllers;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public class Util {
+    /**
+     * Converts given object to a json-String
+     */
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
