@@ -4,7 +4,7 @@ Generates SpringBoot files easily
 Usage: 
 ```
 SpringBootGeneratorCli [--entity <EntityName> <packageIdentifier>] [--fix-tests] [--docker] [--script] [--config]  
-                       [--root='.'] [--name=...] [--port=8080] [--imageName=app21] [--appName=tru_app] [--dbName=truDb] [--dbUser=usr] [--dbPassword=pwd]
+                       [--root='.'] [--port=8080] [--imageName=app21] [--appName=tru_app] [--dbName=truDb] [--dbUser=usr] [--dbPassword=pwd]
   
 --entity......Create an Entity with given Name in the given package.
 	     The packageIdentifier has to point to the package in which the model,
